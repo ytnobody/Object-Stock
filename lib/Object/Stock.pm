@@ -27,7 +27,7 @@ has expire => (
 has expire_tolerance => (
     is      => 'ro', 
     isa     => 'Tolerance',
-    default => sub{ tolerance( -0.01 => to => 0.01 ) },
+    default => sub{ tolerance( -0.05 => to => 0.05 ) },
     coerce  => 1,
 );
 
