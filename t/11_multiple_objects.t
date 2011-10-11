@@ -35,7 +35,7 @@ subtest multiple_get => sub {
         is scalar keys %{$stock->objects}, $count, 'count_test'.show_pattern( $p );
     }
 
-    my @stored = ( 0, 1, 1, 1 );
+    my @stored = ( 1, 1, 1, 0 );
     for my $i ( 0 .. $#records ) {
         if ( $stored[$i] ) {
             ok $stock->is_stored( %{$records[$i]} );

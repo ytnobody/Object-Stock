@@ -70,7 +70,7 @@ sub create_object {
 
 sub get {
     my ( $self, @args ) = @_;
-    return $self->is_stored( @args ) || $self->create_object( @args )
+    return $self->is_stored( @args ) || $self->create_object( @args );
 }
 
 sub is_stored {
@@ -105,7 +105,7 @@ sub purge_overflow {
     for my $id ( keys %{$self->objects} ) {
         push @objects, { object => $self->objects->{"$id"}, id => $id };
     }
-    @objects = sort { $b->{object}->{created_on} <=> $a->{object}->{created_on} } @objects;
+    @objects = sort { $a->{object}->{created_on} <=> $b->{object}->{created_on} } @objects;
 
     shift @objects for 1 .. $self->max_objects;
 
@@ -123,11 +123,15 @@ __END__
 
 =head1 NAME
 
-Object::Stock -
+Object::Stock - An object factory
 
 =head1 SYNOPSIS
 
+  use MyClass;
   use Object::Stock;
+  my $stock = Object::Stock->new(
+      builder     => sub { MyClass->new( @_ ) },
+  );
 
 =head1 DESCRIPTION
 

@@ -25,10 +25,15 @@ subtest get => sub {
 subtest multipul_get => sub {
     my $stock = build_stock();
 
-    my $obj = build_obj( $stock, name => 'hogehoge', age => 20 );
+    my %arg = ( name => 'hogehoge', age => 20 );
+    my $obj = build_obj( $stock, %arg );
     is scalar keys %{$stock->objects}, 1;
-    $obj = build_obj( $stock, name => 'poopoo', age => 40 );
+    ok $stock->is_stored( %arg );
+
+    %arg = ( name => 'poopoo', age => 40 );
+    $obj = build_obj( $stock, %arg );
     is scalar keys %{$stock->objects}, 1;
+    ok ! $stock->is_stored( %arg );
 };
 
 done_testing;

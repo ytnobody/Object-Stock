@@ -13,7 +13,7 @@ sub build_obj {
     my $obj = $stock->get( %args );
     isa_ok $obj, 'MyClass';
     ok $obj->{name} eq $args{name} && $obj->{age} == $args{age}, 
-        'build_obj'. show_pattern( {%args} ). show_caller( @caller )
+        'build_obj'. show_pattern( {%args}, $obj ). show_caller( @caller )
     ;
     return $obj;
 }
@@ -24,7 +24,7 @@ sub fail_obj {
     my $obj = $stock->get( %args );
     isa_ok $obj, 'MyClass';
     ok $obj->{name} ne $args{name} || $obj->{age} != $args{age}, 
-        'fail_obj'. show_pattern( {%args} ). show_caller( @caller )
+        'fail_obj'. show_pattern( {%args}, $obj ). show_caller( @caller )
     ;
     return $obj;
 }
