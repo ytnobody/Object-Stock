@@ -2,6 +2,7 @@ use inc::Module::Install;
 name 'Object-Stock';
 all_from 'lib/Object/Stock.pm';
 
+requires 'Mouse';
 requires 'Time::HiRes';
 requires 'Number::Tolerant';
 
