@@ -127,15 +127,40 @@ Object::Stock - An object factory
 
 =head1 SYNOPSIS
 
-  use MyClass;
+  # singleton object of LWP::UserAgent
   use Object::Stock;
+  
   my $stock = Object::Stock->new(
-      builder     => sub { MyClass->new( @_ ) },
+      builder => sub { LWP::UserAgent->new( @_ ) },
   );
+  
+  my $obj_x = $stock->get( agent => 'MyAgent/1.0' );
+  my $obj_y = $stock->get( agent => 'KoolAgent/0.3' );
+  print $obj_x->agent."\n"; # MyAgent/1.0
+  print $obj_y->agent."\n"; # KoolAgent/0.3
+  $stock->is_stored( agent => 'MyAgent/1.0' ); # TRUE
+  $stock->is_stored( agent => 'KoolAgent/0.3' ); # FALSE
+
+  # some objects(LWP::UserAgent) in Object::Stock
+  use Object::Stock;
+  
+  my $stock = Object::Stock->new(
+      builder => sub { LWP::UserAgent->new( @_ ) },
+      max_objects => 10,
+  );
+  
+  my $obj_x = $stock->get( agent => 'MyAgent/1.0' );
+  my $obj_y = $stock->get( agent => 'KoolAgent/0.3' );
+  print $obj_x->agent."\n"; # MyAgent/1.0
+  print $obj_y->agent."\n"; # KoolAgent/0.3
+  $stock->is_stored( agent => 'MyAgent/1.0' ); # TRUE
+  $stock->is_stored( agent => 'KoolAgent/0.3' ); # TRUE!!!
 
 =head1 DESCRIPTION
 
-Object::Stock is
+Object::Stock is An object factory class.
+
+Object::Stock identifies objects by their instantiation attributes.
 
 =head1 AUTHOR
 
